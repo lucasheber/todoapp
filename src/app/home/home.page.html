@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      TODO
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,12 +9,28 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">TODO</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-row *ngFor="let task of tasks; index as i;">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ task.title }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        {{ task.description }}
+      </ion-card-content>
+
+      <ion-button (click)="editar(i)" fill="clear" color="secondary">Editar</ion-button>
+      <ion-button (click)="remover(i)" fill="clear" color="danger">Remover</ion-button>
+    </ion-card>
+  </ion-row>
+
+  <ion-fab id="add-fab" slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="add" (click)="addItem()"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

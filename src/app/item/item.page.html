@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Item</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Adicionar tarefa</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <br />
+
+  <form #form="ngForm" (ngSubmit)="save(form)">
+    <ion-list>
+      <ion-item>
+        <ion-input name="title" label="Título" labelPlacement="stacked" [clearInput]="true" placeholder="Insira o título" value="" [(ngModel)]="title" required>
+        </ion-input>
+      </ion-item>
+
+      <br />
+
+      <ion-item>
+        <ion-textarea name="description" label="Descrição" labelPlacement="stacked" placeholder="Insira a descrição" [(ngModel)]="description" required></ion-textarea>
+      </ion-item>
+
+      <br />
+      <br />
+
+      <div class="ion-text-center">
+        <ion-button color="success" type="submit" [disabled]="form.invalid">Salvar</ion-button>
+      </div>
+
+    </ion-list>
+  </form>
+</ion-content>
