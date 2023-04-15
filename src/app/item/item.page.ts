@@ -15,7 +15,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ItemPage implements OnInit {
 
   private tasks: Array<any> = [];
-  private id: number = -1;
+  private id: number = NaN;
 
   title: string = ''
   description: string = '';
@@ -26,26 +26,29 @@ export class ItemPage implements OnInit {
     private route: ActivatedRoute
   ) { }
 
-  async ionViewWillEnter() {
-    await this.route.params.subscribe(params => {
-      this.id = +params['id'];
-
-      if (this.tasks.length) {
-        this.title = this.tasks[this.id].title;
-        this.description = this.tasks[this.id].description;
-      }
-    });
-  }
-
   async ngOnInit() {
     await this.storage.get('tasks')?.then((data) => {
       this.tasks = JSON.parse(data);
     });
   }
 
+  async ionViewWillEnter() {
+    await this.storage.get('tasks')?.then((data) => {
+      this.tasks = JSON.parse(data);
+    });
+    
+    await this.route.params.subscribe(params => {
+      this.id = +params['id'];
+      if (this.tasks.length > 0 && !Number.isNaN(this.id)) {
+        this.title = this.tasks[this.id].title;
+        this.description = this.tasks[this.id].description;
+      }
+    });
+  }
+
   async save(data: any) {
 
-    if (this.id === -1) {
+    if (Number.isNaN(this.id)) {
       this.tasks.push({ 'title': data.value.title, 'description': data.value.description });
     } else {
       this.tasks[this.id] = { 'title': data.value.title, 'description': data.value.description }
